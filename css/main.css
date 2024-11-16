@@ -1,0 +1,106 @@
+::selection {
+  background-color: #fec260;
+}
+
+body {
+  font-family: "PT Sans Caption", sans-serif;
+  background-color: #F7ECDE;
+}
+
+.landing h1 {
+  font-size: 50px;
+  font-family: "Pacifico", cursive;
+  color: #352e28;
+  display: inline-block;
+}
+
+.landing h1::before {
+  content: '';
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  background-color: #fec260;
+  transition: height .4s;
+  z-index: -1;
+}
+
+.landing h1:hover::before {
+  height: 50%;
+}
+
+.landing .content {
+  border-width: 2px 0 2px 0;
+  border-style: dotted;
+  border-color: #352e28;
+}
+
+.landing .content h2 {
+  font-size: 25px;
+  font-weight: 700;
+  background-image: linear-gradient(135deg, #3ca55c, #b5ac49);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.landing .content input:focus {
+  border-color: #d99c39;
+  box-shadow: 0 0 0 0.25rem #fec26055;
+}
+
+.landing .content .icon {
+  position: relative;
+  right: 25px;
+  bottom: 0;
+  color: #eb1d36;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #eb1d36;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.landing .content p {
+  color: #eb1d36;
+  margin-top: 5px !important;
+}
+
+.landing .content button {
+  background-color: #d1512d;
+  border-color: #d1512d !important;
+  color: #fff;
+  transition: background-color .4s;
+}
+
+.landing .content button:hover {
+  background-color: #bb4120;
+}
+
+.landing table .visit {
+  background-color: #9eb23b;
+  color: #fff;
+  transition: background-color .4s;
+}
+
+.landing table .visit:hover {
+  background-color: #8a9e23;
+}
+
+.landing table .delete {
+  background-color: #eb1d36;
+  color: #fff;
+  transition: background-color .4s;
+}
+
+.landing table .delete:hover {
+  background-color: #d30820;
+}
+
+.landing table td,
+.landing table th {
+  padding: 0.5rem;
+}

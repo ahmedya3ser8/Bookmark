@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookmark</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans+Caption:wght@400;700&family=Pacifico&display=swap" />
+    <link rel="shortcut icon" href="./images/bookmark.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./css/all.min.css" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <div class="landing py-5">
+      <div class="container d-flex justify-content-center align-items-center flex-column">
+        <h1 class="py-3 position-relative">Bookmarker</h1>
+        <div class="content w-100 d-flex align-items-center justify-content-center flex-column g-5 px-3 py-4 mt-5">
+          <h2>
+            <i class="fa-solid fa-bookmark"></i>
+            Bookmark your favorite sites
+            <i class="fa-solid fa-bookmark"></i>
+          </h2>
+          <div class="bookmark-name w-100 mb-4">
+            <label for="site-name" class="pb-2 fw-semibold">
+              <i class="fa-solid fa-book-bookmark me-2"></i>
+              Site Name
+            </label>
+            <div class="d-flex justify-content-center align-items-center">
+              <input id="site-name" class="form-control" type="text" placeholder="Bookmark Name" />
+              <span id="nameIcon" class="icon d-none">
+                <i id="nameExclamation" class="fa-solid fa-exclamation"></i>
+              </span>
+            </div>
+            <p id="siteName-message" class="m-0 d-none">Site name must contain at least 3 characters</p>
+          </div>
+          <div class="bookmark-url w-100 mb-4">
+            <label for="site-url" class="pb-2 fw-semibold">
+              <i class="fa-solid fa-link me-2"></i>
+              Site URL
+            </label>
+            <div class="d-flex justify-content-center align-items-center">
+              <input id="site-url" class="form-control" type="text" placeholder="Website URL" />
+              <span id="urlIcon" class="icon d-none">
+                <i id="urlExclamation" class="fa-solid fa-exclamation"></i>
+              </span>
+            </div>
+            <p id="siteUrl-message" class="m-0 d-none">Site URL must be a valid one</p>
+          </div>
+          <button class="btn submit px-5" id="submit">Submit</button>
+        </div>
+        <table class="table mt-4 text-center">
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Website Name</th>
+              <th>Visit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody id="tableData">
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/index.js"></script>
+  </body>
+</html>

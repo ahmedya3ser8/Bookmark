@@ -1,12 +1,6 @@
-var websiteName = document.getElementById('site-name');
-var websiteUrl = document.getElementById('site-url');
+var websiteName = document.getElementById('siteName');
+var websiteUrl = document.getElementById('siteUrl');
 var submitBtn = document.getElementById('submit');
-var siteNameMessage = document.getElementById('siteName-message');
-var siteUrlMessage = document.getElementById('siteUrl-message');
-var nameIcon = document.getElementById('nameIcon');
-var urlIcon = document.getElementById('urlIcon');
-var nameExclamation = document.getElementById('nameExclamation');
-var urlExclamation = document.getElementById('urlExclamation');
 
 var websites = [];
 
@@ -15,16 +9,21 @@ if(localStorage.getItem('websites') != null) {
   displayWebsite();
 }
 
-submitBtn.onclick = function() {
-  if (websiteName.value === '' || siteUrl.value === '') {
-    siteNameMessage.classList.remove('d-none');
-    siteUrlMessage.classList.remove('d-none');
-  } else {
-    if (websiteName.value.match(/^\w{3,}(\s+\w+)*$/) && websiteUrl.value.match(/^(https?:\/\/)?(w{3}\.)?\w+\.\w{3,}$/)) {
-      addWebsite();
-    }
+submitBtn.addEventListener('click', function() {
+  if (validateInputs(websiteName, 'msgName') && validateInputs(websiteUrl, 'msgUrl') && !isDuplicate(websiteName, 'msgName', 'Website Name already exists!') && !isDuplicate(websiteUrl, 'msgUrl', 'Website Url already exists!')) {
+    addWebsite();
   }
-}
+});
+
+websiteName.addEventListener('input', function() {
+  validateInputs(websiteName, 'msgName');
+  isDuplicate(websiteName, 'msgName', 'Website Name already exists!');
+});
+
+websiteUrl.addEventListener('input', function() {
+  validateInputs(websiteUrl, 'msgUrl');
+  isDuplicate(websiteUrl, 'msgUrl', 'Website Url already exists!');
+});
 
 function addWebsite() {
   var website = {
@@ -40,6 +39,10 @@ function addWebsite() {
 function clearData() {
   websiteName.value = null;
   websiteUrl.value = null;
+  websiteName.classList.remove('is-valid');
+  websiteUrl.classList.remove('is-valid');
+  websiteName.style.cssText = 'border-color: none; box-shadow: none';
+  websiteUrl.style.cssText = 'border-color: none; box-shadow: none';
 }
 
 function displayWebsite() {
@@ -82,41 +85,52 @@ function deleteWebsite(i) {
   displayWebsite();
 }
 
-websiteName.addEventListener('input', function(e) {
-  validateInputs(/^\w{3,}(\s+\w+)*$/, websiteName, siteNameMessage, nameIcon, nameExclamation, e);
-});
-
-websiteUrl.addEventListener('input', function(e) {
-  validateInputs(/^(https?:\/\/)?(w{3}\.)?\w+\.\w{3,}$/, websiteUrl, siteUrlMessage, urlIcon, urlExclamation, e);
-});
-
-function validateInputs(regexValidate, website, siteMessage, icon, exclamationIcon, e) {
-  var regex = regexValidate;
-  if (regex.test(e.target.value)) {
-    website.style.borderColor = '#198754';
-    website.style.boxShadow = '0 0 0 0.25rem #19875440';
-    siteMessage.classList.add('d-none');
-    exclamationIcon.classList.remove('fa-exclamation');
-    exclamationIcon.classList.add('fa-check');
-    icon.style.color = '#198754';
-    icon.style.borderColor = '#198754';
-  } else if (e.target.value === '') {
-    website.style.borderColor = '#dc3545';
-    website.style.boxShadow = 'none';
-    siteMessage.classList.remove('d-none');
-    icon.classList.remove('d-none');
-    exclamationIcon.classList.remove('fa-check');
-    exclamationIcon.classList.add('fa-exclamation');
-    icon.style.color = '#eb1d36';
-    icon.style.borderColor = '#eb1d36';
+function validateInputs(element, msgId) {
+  var text = element.value;
+  var regex = {
+    siteName: /^\w{3,}(\s+\w+)*$/,
+    siteUrl: /^(https?:\/\/)?(w{3}\.)?\w+\.\w{3,}$/
+  };
+  var msg = document.getElementById(msgId);
+  if (regex[element.id].test(text)) {
+    element.classList.add('is-valid');
+    element.classList.remove('is-invalid');
+    msg.classList.add('d-none');
+    element.style.cssText = 'border-color: #198754; box-shadow: 0 0 0 0.25rem #19875440';
+    return true;
   } else {
-    website.style.borderColor = '#dc3545';
-    website.style.boxShadow = '0 0 0 0.25rem #dc354540';
-    siteMessage.classList.remove('d-none');
-    icon.classList.remove('d-none');
-    exclamationIcon.classList.remove('fa-check');
-    exclamationIcon.classList.add('fa-exclamation');
-    icon.style.color = '#eb1d36';
-    icon.style.borderColor = '#eb1d36';
+    element.classList.add('is-invalid');
+    element.classList.remove('is-valid');
+    msg.classList.remove('d-none');
+    element.style.cssText = 'border-color: #dc3545; box-shadow: 0 0 0 0.25rem #dc354540';
+    return false;
   }
+}
+
+function isDuplicate(element, msgId, msgText) {
+  var isDuplicated = websites.some((site) => site.name === element.value || site.url === element.value);
+  if (element.value === '') {
+    element.classList.remove('is-invalid');
+    element.style.cssText = 'border-color: none; box-shadow: none';
+    document.getElementById(msgId).classList.add('d-none');
+  } else if (isDuplicated) {
+    document.getElementById(msgId).innerHTML = msgText;
+    document.getElementById(msgId).classList.remove('d-none');
+    return true;
+  }
+  // another solution
+  /*
+  for (var i = 0; i < websites.length; i++) {
+    if (websites[i].name === element.value || websites[i].url === element.value) {
+      document.getElementById(msgId).innerHTML = msgText;
+      document.getElementById(msgId).classList.remove('d-none');
+      return true;
+    }
+  }
+  if (element.value === '') {
+    element.classList.remove('is-invalid');
+    element.style.cssText = 'border-color: none; box-shadow: none';
+    document.getElementById(msgId).classList.add('d-none');
+  } 
+  */
 }
